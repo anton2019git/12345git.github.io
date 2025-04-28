@@ -252,11 +252,10 @@
             border-color: #e74c3c;
         }
 
-        /* Стили для иконок социальных сетей в контактной информации */
+        /* Стили для иконок социальных сетей */
         .social-links .social-icon {
             display: inline-flex;
             align-items: center;
-            color: #2c3e50;
             margin: 0 10px 10px 0;
             text-decoration: none;
             transition: color 0.3s;
@@ -267,7 +266,21 @@
             font-size: 1.2rem;
         }
 
-        .social-links .social-icon:hover {
+        /* Стили для иконок в подвале */
+        footer .social-links .social-icon {
+            color: white;
+        }
+
+        footer .social-links .social-icon:hover {
+            color: #3498db;
+        }
+
+        /* Стили для иконок в контактной информации */
+        .contact-info .social-links .social-icon {
+            color: #2c3e50;
+        }
+
+        .contact-info .social-links .social-icon:hover {
             color: #3498db;
         }
 
@@ -281,17 +294,6 @@
 
         .social-links {
             margin-bottom: 1rem;
-        }
-
-        .social-icon {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .social-icon:hover {
-            color: #3498db;
         }
 
         /* Модальні вікна */
@@ -455,9 +457,9 @@
 
     <footer>
         <div class="social-links">
-            <a href="https://www.facebook.com/travelua" target="_blank" class="social-icon">Facebook</a>
-            <a href="https://www.instagram.com/travelua" target="_blank" class="social-icon">Instagram</a>
-            <a href="https://x.com/travelua" target="_blank" class="social-icon">X</a>
+            <a href="https://www.facebook.com/travelua" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i>Facebook</a>
+            <a href="https://www.instagram.com/travelua" target="_blank" class="social-icon"><i class="fab fa-instagram"></i>Instagram</a>
+            <a href="https://x.com/travelua" target="_blank" class="social-icon"><i class="fab fa-x-twitter"></i>X</a>
         </div>
         <p>© 2025 Подорожі Україною</p>
     </footer>
@@ -789,5 +791,7 @@
         // Обновление страницы при изменении URL
         window.addEventListener('popstate', loadPage);
     </script>
+</body>
+</html>
 </body>
 </html>
