@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подорожі Україною</title>
+    <style>
+        /* Глобальні стилі */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Навігаційна панель */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #2c3e50;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #3498db;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            background-color: #3498db;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Бургер-меню для мобільних пристроїв */
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        /* Головний контент */
+        main {
+            padding: 2rem 5%;
+            min-height: calc(100vh - 150px);
+        }
+
+        /* Герой-секція */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1200x600?text=Hero+Image');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-btn {
+            padding: 0.8rem 2rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Сітка особливостей */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        /* Сітка місць */
+        .places-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .place-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .place-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .place-card img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            aspect-ratio: 3/2;
+        }
+
+        .place-card h2 {
+            padding: 1rem 1rem 0;
+        }
+
+        .place-card p {
+            padding: 0 1rem 1rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0 1rem 1rem;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .read-more:hover {
+            background-color: #2980b9;
+        }
+
+        /* Контактна сторінка */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info, .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h2, .contact-form h2 {
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .contact-info p {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            padding: 0.8rem 2rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #2980b9;
+        }
+
+        .contact-form input:invalid, .contact-form textarea:invalid {
+            border-color: #e74c3c;
+        }
+
+        /* Підвал */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .social-links {
+            margin-bottom: 1rem;
+        }
+
+        .social-icon {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: #3498db;
+        }
+
+        /* Модальні вікна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .modal input:invalid {
+            border-color: #e74c3c;
+        }
+
+        .modal button {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Ефекти для заголовків */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #3498db, 0 0 20px #3498db;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #2980b9, 0 0 40px #2980b9;
+            }
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        /* Адаптивність */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #2c3e50;
+                width: 100%;
+                text-align: center;
+                transition: 0.5s;
+                padding: 1rem 0;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+            }
+        }
+
+        /* Анімація бургер-меню */
+        .toggle .line1 {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .toggle .line2 {
+            opacity: 0;
+        }
+        .toggle .line3 {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><a href="?page=index" aria-label="Подорожі Україною">Подорожі</a></div>
+            <ul class="nav-links">
+                <li><a href="?page=index" class="nav-link">Головна</a></li>
+                <li><a href="?page=places" class="nav-link">Цікаві місця</a></li>
+                <li><a href="?page=contacts" class="nav-link">Контакти</a></li>
+                <li><button id="loginBtn" class="nav-btn">Увійти</button></li>
+                <li><button id="registerBtn" class="nav-btn">Реєстрація</button></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <!-- Содержимое будет динамически подгружаться через JavaScript -->
+    </main>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://www.facebook.com/travelua" target="_blank" class="social-icon">Facebook</a>
+            <a href="https://www.instagram.com/travelua" target="_blank" class="social-icon">Instagram</a>
+            <a href="https://x.com/travelua" target="_blank" class="social-icon">X</a>
+        </div>
+        <p>© 2025 Подорожі Україною</p>
+    </footer>
+
+    <!-- Модальне вікно для реєстрації -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Реєстрація</h2>
+            <form id="registerForm">
+                <input type="text" name="name" placeholder="Ім'я" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit">Зареєструватись</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальне вікно для входу -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+dirst
+            <h2>Вхід</h2>
+            <form id="loginForm">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <button type="submit">Увійти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальне вікно для кнопки "Дізнатись більше" -->
+    <div id="exploreModal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Про наш путівник</h2>
+            <p>Наш сайт допоможе вам відкрити для себе найкращі місця України. Ми пропонуємо:</p>
+            <ul>
+                <li>Детальні описи місць</li>
+                <li>Фотографії</li>
+                <li>Корисні поради</li>
+                <li>Маршрути для подорожей</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Динамическая загрузка контента
+        function loadPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const page = urlParams.get('page') || 'index';
+            const mainContent = document.getElementById('main-content');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // Устанавливаем активный класс для навигации
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(page)) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Контент для страниц
+            const pages = {
+                index: `
+                    <section class="hero">
+                        <h1 class="glow">Відкривай Україну разом з нами</h1>
+                        <p>Найкращі місця для подорожей у нашому путівнику</p>
+                        <button id="exploreBtn" class="cta-btn">Дізнатись більше</button>
+                    </section>
+                    <section class="features">
+                        <div class="feature-card">
+                            <h2>Гори</h2>
+                            <p>Відвідайте Карпати та Кримські гори</p>
+                        </div>
+                        <div class="feature-card">
+                            <h2>Міста</h2>
+                            <p>Історичні та сучасні міста України</p>
+                        </div>
+                        <div class="feature-card">
+                            <h2>Природа</h2>
+                            <p>Національні парки та заповідники</p>
+                        </div>
+                    </section>
+                `,
+                places: `
+                    <h1 class="page-title glow">Найцікавіші місця України</h1>
+                    <div class="places-grid">
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Kyiv+Lavra" alt="Києво-Печерська лавра">
+                            <h2>Києво-Печерська лавра</h2>
+                            <p>Один з найбільших православних монастирських комплексів у світі, заснований у 1051 році.</p>
+                            <a href="#kyiv-lavra" class="read-more">Читати більше</a>
+                        </div>
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Synevyr" alt="Озеро Синевир">
+                            <h2>Озеро Синевир</h2>
+                            <p>Найбільше і найкрасивіше озеро в Українських Карпатах, розташоване на висоті 989 метрів.</p>
+                            <a href="#synevyr" class="read-more">Читати більше</a>
+                        </div>
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Khotyn" alt="Хотинська фортеця">
+                            <h2>Хотинська фортеця</h2>
+                            <p>Середньовічна фортеця X-XVIII століть, одна з найкраще збережених пам'яток оборонної архітектури.</p>
+                            <a href="#khotyn" class="read-more">Читати більше</a>
+                        </div>
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Olesko" alt="Олеський замок">
+                            <h2>Олеський замок</h2>
+                            <p>Одна з найстаріших пам'яток оборонної архітектури Галичини, побудована у XIV столітті.</p>
+                            <a href="#olesko" class="read-more">Читати більше</a>
+                        </div>
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Askania" alt="Асканія-Нова">
+                            <h2>Асканія-Нова</h2>
+                            <p>Унікальний біосферний заповідник, де зберігається ділянка цілинного степу.</p>
+                            <a href="#askania" class="read-more">Читати більше</a>
+                        </div>
+                        <div class="place-card">
+                            <img src="https://via.placeholder.com/300x200?text=Kamenets" alt="Каменець-Подільський">
+                            <h2>Каменець-Подільський</h2>
+                            <p>Місто з унікальним історико-архітектурним комплексом, засноване у XI столітті.</p>
+                            <a href="#kamenets" class="read-more">Читати більше</a>
+                        </div>
+                    </div>
+                `,
+                contacts: `
+                    <h1 class="page-title glow">Зв'яжіться з нами</h1>
+                    <div class="contact-container">
+                        <div class="contact-info">
+                            <h2>Наша адреса</h2>
+                            <p>м. Київ, вул. Хрещатик, 1</p>
+                            <h2>Телефон</h2>
+                            <p>+380 (44) 123-45-67</p>
+                            <h2>Email</h2>
+                            <p>info@travel-ua.com</p>
+                            <h2>Соціальні мережі</h2>
+                            <div class="social-links">
+                                <a href="https://www.facebook.com/travelua" target="_blank" class="social-icon">Facebook</a>
+                                <a href="https://www.instagram.com/travelua" target="_blank" class="social-icon">Instagram</a>
+                                <a href="https://x.com/travelua" target="_blank" class="social-icon">X</a>
+                            </div>
+                        </div>
+                        <div class="contact-form">
+                            <h2>Напишіть нам</h2>
+                            <form id="contactForm">
+                                <input type="text" name="name" placeholder="Ваше ім'я" required>
+                                <input type="email" name="email" placeholder="Ваш Email" required>
+                                <textarea name="message" placeholder="Ваше повідомлення" required></textarea>
+                                <button type="submit">Надіслати</button>
+                            </form>
+                        </div>
+                    </div>
+                `
+            };
+
+            mainContent.innerHTML = pages[page] || pages.index;
+
+            // Переинициализация обработчиков для динамического контента
+            initEventListeners();
+        }
+
+        // Инициализация обработчиков событий
+        function initEventListeners() {
+            const exploreBtn = document.getElementById('exploreBtn');
+            const exploreModal = document.getElementById('exploreModal');
+            if (exploreBtn && exploreModal) {
+                exploreBtn.addEventListener('click', () => {
+                    exploreModal.style.display = 'block';
+                });
+            }
+
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = contactForm.querySelector('input[name="name"]').value;
+                    const email = contactForm.querySelector('input[name="email"]').value;
+                    const message = contactForm.querySelector('textarea[name="message"]').value;
+
+                    if (!validateEmail(email)) {
+                        alert('Будь ласка, введіть коректний email!');
+                        return;
+                    }
+
+                    if (message.length < 10) {
+                        alert('Повідомлення повинно містити щонайменше 10 символів!');
+                        return;
+                    }
+
+                    alert(`Повідомлення відправлено, ${name}!`);
+                    contactForm.reset();
+                });
+            }
+
+            document.querySelectorAll('.read-more').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const placeId = link.getAttribute('href').substring(1);
+                    alert(`Докладна інформація про ${placeId} буде доступна незабаром!`);
+                });
+            });
+        }
+
+        // Бургер-меню
+        const burger = document.querySelector('.burger');
+        const navLinks = document.querySelector('.nav-links');
+
+        if (burger && navLinks) {
+            burger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                burger.classList.toggle('toggle');
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    burger.classList.remove('toggle');
+                });
+            });
+        }
+
+        // Модальні вікна
+        const registerBtn = document.getElementById('registerBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerModal = document.getElementById('registerModal');
+        const loginModal = document.getElementById('loginModal');
+        const closeBtns = document.querySelectorAll('.close');
+
+        if (registerBtn && registerModal) {
+            registerBtn.addEventListener('click', () => {
+                registerModal.style.display = 'block';
+            });
+        }
+
+        if (loginBtn && loginModal) {
+            loginBtn.addEventListener('click', () => {
+                loginModal.style.display = 'block';
+            });
+        }
+
+        if (closeBtns) {
+            closeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.closest('.modal').style.display = 'none';
+                });
+            });
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+
+        // Валідація та обробка форм
+        const validateEmail = (email) => {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        };
+
+        const validatePassword = (password) => {
+            return password.length >= 6;
+        };
+
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = registerForm.querySelector('input[name="name"]').value;
+                const email = registerForm.querySelector('input[name="email"]').value;
+                const password = registerForm.querySelector('input[name="password"]').value;
+
+                if (!validateEmail(email)) {
+                    alert('Будь ласка, введіть коректний email!');
+                    return;
+                }
+
+                if (!validatePassword(password)) {
+                    alert('Пароль повинен містити щонайменше 6 символів!');
+                    return;
+                }
+
+                alert(`Реєстрація успішна, ${name}!`);
+                registerForm.reset();
+                registerModal.style.display = 'none';
+            });
+        }
+
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = loginForm.querySelector('input[name="email"]').value;
+                const password = loginForm.querySelector('input[name="password"]').value;
+
+                if (!validateEmail(email)) {
+                    alert('Будь ласка, введіть коректний email!');
+                    return;
+                }
+
+                if (!validatePassword(password)) {
+                    alert('Пароль повинен містити щонайменше 6 символів!');
+                    return;
+                }
+
+                alert('Вхід успішний!');
+                loginForm.reset();
+                loginModal.style.display = 'none';
+            });
+        }
+
+        // Плавна прокрутка для всіх посилань
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Загрузка страницы при старте
+        loadPage();
+
+        // Обновление страницы при изменении URL
+        window.addEventListener('popstate', loadPage);
+    </script>
+</body>
+</html>
